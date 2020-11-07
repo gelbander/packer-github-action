@@ -3,9 +3,17 @@ author: 'Robert Anderson <gelbander@gmail.com>'
 description: 'Run packer build'
 inputs:
   workingDir:
-    description: 'Directory where the packer template and var file reside'
+    description: 'Root directory'
     required: false
     default: '.'
+  templateFile:
+    description: 'Packer template file eg "packer.json"'
+    required: false
+    default: 'packer-template.json'
+  varInput:
+    description: 'Key value pair input'
+    required: false
+    default: 'git_version=112233ee'
 runs:
   using: 'docker'
   image: 'Dockerfile'
