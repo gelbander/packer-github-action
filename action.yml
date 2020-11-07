@@ -1,0 +1,14 @@
+name: 'Packer build'
+author: 'Robert Anderson <gelbander@gmail.com>'
+description: 'Run packer build'
+inputs:
+  workingDir:
+    description: 'Directory where the packer template and var file reside'
+    required: false
+    default: '.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'check-circle'
+  color: 'blue'
