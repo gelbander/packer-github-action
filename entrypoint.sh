@@ -1,22 +1,18 @@
 #!/bin/sh
 set -e
 
-TEMPLATE_FILE_NAME=${INPUT_TEMPLATEFILENAME:-"packer.json"}
-VAR_LIST=${INPUT_VARLIST:-""}
-VAR_FILE_NAME=${INPUT_VARFILENAME:-""}
+WORKINGDIR=${INPUT_WORKINGDIR:-.}
+TEMPLATE_FILE_NAME=${INPUT_TEMPLATEFILENAME:-packer.json}
+VAR_LIST=${INPUT_VARLIST:-}
+VAR_FILE_NAME=${INPUT_VARFILENAME:-}
 
 # Set the working directory for the template
-cd "${INPUT_WORKINGDIR:-.}"
+cd "${WORKINGDIR:-.}"
 
-# Verify files existence
-if [[ ! -f "$TEMPLATE_FILE_NAME" ]] && [[ $TEMPLATE_FILE_NAME != *.json ]]; then
-    echo "${TEMPLATE_FILE_NAME} does not exit in the working directory (${INPUT_WORKINGDIR})"
-    exit 1
-fi
-
-if [[ ! -f "$VAR_FILE_NAME" ]] && [[ $VAR_FILE_NAME != *.json ]]; then
-    echo "${VAR_FILE_NAME} does not exit in the working directory (${INPUT_WORKINGDIR})"
-    exit 1
+# Verify template file existence
+if [[ ! -f "$TEMPLATE_FILE_NAME" ]]; then
+  echo "${TEMPLATE_FILE_NAME} does not exit in the working directory (${WORKINGDIR})"
+  exit 1
 fi
 
 # Concatenate arguments list
@@ -26,12 +22,17 @@ do
 done
 
 # Add -var-file argument if exists
-if [ ! -z "$VAR_FILE_NAME" ]
-then
-      VARFILE_ARGUMENTS="-var-file ${VAR_FILE_NAME}"
+if [ ! -z "$VAR_FILE_NAME" ]; then
+  if [ ! -f "$VAR_FILE_NAME" ]; then
+    echo "${VAR_FILE_NAME} does not exit in the working directory (${WORKINGDIR})"
+    exit 1
+  fi
+  VARFILE_ARGUMENTS="-var-file ${VAR_FILE_NAME}"
 fi
 
-CMD="packer build ${VAR_ARGUMENTS}${VARFILE_ARGUMENTS}${TEMPLATE_FILE_NAME}"
+CMD="packer build ${VAR_ARGUMENTS}${VARFILE_ARGUMENTS} ${TEMPLATE_FILE_NAME}"
+
+echo $CMD
 
 set +e
 # Execute command
