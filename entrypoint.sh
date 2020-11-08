@@ -36,7 +36,7 @@ echo $CMD
 
 set +e
 # Execute command
-BUILD_OUTPUT=$(sh -c CMD 2>&1)
+BUILD_OUTPUT=$(sh -c $CMD 2>&1)
 BUILD_SUCCESS=$?
 echo "$BUILD_OUTPUT"
 set -e
