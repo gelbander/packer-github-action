@@ -18,7 +18,7 @@ fi
 # Concatenate arguments list
 for i in $(echo $VAR_LIST | tr "," "\n")
 do
-  VAR_ARGUMENTS="-var ${i} "$VAR_ARGUMENTS
+  VAR_ARGUMENTS="-var '${i}' "$VAR_ARGUMENTS
 done
 
 # Add -var-file argument if exists
