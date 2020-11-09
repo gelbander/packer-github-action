@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-echo $SERVICE_ACCOUNT_BASE64 | base64 -d > service_account.json
-
 WORKINGDIR=${INPUT_WORKINGDIR:-.}
 TEMPLATE_FILE_NAME=${INPUT_TEMPLATEFILENAME:-packer.json}
 VAR_LIST=${INPUT_VARLIST:-}
