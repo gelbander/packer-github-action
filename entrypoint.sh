@@ -2,6 +2,7 @@
 set -e
 
 echo $SERVICE_ACCOUNT_BASE64 | base64 -d > service_account.json
+echo $GITHUB_SHA
 
 WORKINGDIR=${INPUT_WORKINGDIR:-.}
 TEMPLATE_FILE_NAME=${INPUT_TEMPLATEFILENAME:-packer.json}
@@ -34,9 +35,9 @@ fi
 
 set +e
 # Execute command
-BUILD_OUTPUT=$(sh -c "packer build ${VAR_ARGUMENTS}${VARFILE_ARGUMENTS} ${TEMPLATE_FILE_NAME}" 2>&1)
-BUILD_SUCCESS=$?
-echo "$BUILD_OUTPUT"
-set -e
+OPERATION="packer build ${VAR_ARGUMENTS}${VARFILE_ARGUMENTS} ${TEMPLATE_FILE_NAME}"
+echo "Executing: ${OPERATION}"
+${OPERATION}
 
-exit $BUILD_SUCCESS
+set -e
+exit 0
