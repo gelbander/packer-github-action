@@ -1,5 +1,5 @@
 name: 'Packer build'
-author: 'Robert Anderson <gelbander@gmail.com>'
+author: 'Gustaf Elbander <gelbander@gmail.com>'
 description: 'Run packer build'
 inputs:
   workingDir:
