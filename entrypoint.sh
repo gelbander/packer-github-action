@@ -32,7 +32,7 @@ fi
 
 set +e
 # Execute command
-BUILD_OUTPUT=$(sh -c "packer build ${VAR_ARGUMENTS} ${VARFILE_ARGUMENTS} ${INPUT_TEMPLATEFILE}" 2>&1)
+BUILD_OUTPUT=$(sh -c "packer build ${VAR_ARGUMENTS} ${VARFILE_ARGUMENTS} ${TEMPLATE_FILE_NAME}" 2>&1)
 BUILD_SUCCESS=$?
 echo "$BUILD_OUTPUT"
 set -e
